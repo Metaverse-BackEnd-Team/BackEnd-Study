@@ -7,28 +7,35 @@ import java.util.Scanner;
 public class Controller {
     public boolean isNotice = false;
     public String noticeText = "";
-    View view = new View();
-    public void GetNumber(){
+    public View view;
+
+    public Controller() {
+        this.view = new View(this);
+    }
+
+    public void GetNumber() {
         Scanner scanner = new Scanner(System.in);
         int seletNumber = scanner.nextInt();
         switch (seletNumber) {
             case 0:
                 AddNoticeListInfo();
                 break;
-                case 1:
-                    InsertNotice();
-                    break;
-                    case 2:
-                        UpdateNotice();
-                        break;
-                        case 3:
-                            DeleteNotice();
-                            break;
+            case 1:
+                InsertNotice();
+                break;
+            case 2:
+                UpdateNotice();
+                break;
+            case 3:
+                DeleteNotice();
+                break;
             default:
                 System.out.println("wrong number");
                 break;
         }
     }
+
+
     // 이미 있는 공지사항의 내용을 봅니다.
     public void AddNoticeListInfo(){
         if (!isNotice)
@@ -86,12 +93,13 @@ public class Controller {
             }
         }
     }
+
     // 새로운 공지사항을 등록합니다.
     public void InsertNotice(){
         System.out.println("안내말씀 드립니다.");
         System.out.println("공지사항은 현재 1개만 등록할수있습니다.");
         System.out.println("계속 진행하시겠습니까?");
-        System.out.println("계속 하려면 1 아니면 2를 눌러주십시오");
+        System.out.print("계속 하려면 1 아니면 2를 눌러주십시오");
         Scanner scanner = new Scanner(System.in);
         int intInsert = scanner.nextInt();
         switch (intInsert) {
@@ -111,8 +119,8 @@ public class Controller {
     public void InsertNoticeStart(){
         System.out.println("공지사항 작성을 시작합니다.");
         System.out.println("입력할 공지사항의 내용을 입력하여 주십시오");
-        Scanner scanner = new Scanner(System.in);
-        noticeText = scanner.nextLine();
+        Scanner sc = new Scanner(System.in);
+        noticeText = sc.nextLine();
         System.out.println("입력하신 내용은 다음과 같습니다.");
         System.out.println(noticeText);
         System.out.println("현재 입력하신 내용이 맞습니까?");
@@ -136,14 +144,69 @@ public class Controller {
                 break;
         }
     }
+
     // 이미 등록이 되어 있는 공지사항을 수정합니다.
     public void UpdateNotice(){
-        System.out.println("UpdateNotice");
+        if (!isNotice){
+            System.out.println("수정할 공지사항이 존재하지 않습니다.");
+            System.out.println("초기메뉴로 돌아갑니다. ");
+            view.menu();
+        }
+        else {
+            System.out.println("현재 공지사항 :: " + noticeText);
+            System.out.println("새로운 공지사항 내용을 입력해주세요");
+
+            Scanner sc = new Scanner(System.in);
+            String updateNewNoticeText = sc.nextLine();
+
+            System.out.println("변경된 내용은 다음과 같습니다.");
+            System.out.println(updateNewNoticeText);
+            System.out.println("이대로 수정하시겠습니까? 그렇다면 1번 아니면 2번을 입력해주세요");
+
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    noticeText = updateNewNoticeText;
+                    System.out.println("수정이 완료되었습니다.");
+                    break;
+                    case 2:
+                        System.out.println("공지사항 수정을 취소합니다.");
+                        break;
+                default:
+                    System.out.println("잘못된 입력입니다.");
+                    break;
+            }
+            view.menu();
+        }
     }
     // 이미 등록이 되어 있는 공지사항을 삭제합니다.
     public void DeleteNotice(){
-        System.out.println("DeleteNotice");
+        if (!isNotice) {
+            System.out.println("삭제할 공지사항이 존재하지 않습니다.");
+            view.menu();  // 초기 메뉴로 돌아가기
+        } else {
+            System.out.println("현재 공지사항: " + noticeText);
+            System.out.println("정말로 공지사항을 삭제하시겠습니까? 그렇다면 1번 아니면 2번");
+
+            Scanner sc = new Scanner(System.in);
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    noticeText = "";
+                    isNotice = false;
+                    System.out.println("공지사항이 성공적으로 삭제되었습니다.");
+                    break;
+                case 2:
+                    System.out.println("공지사항 삭제를 취소합니다.");
+                    break;
+                default:
+                    System.out.println("잘못된 입력입니다. 메뉴로 돌아갑니다.");
+                    break;
+            }
+            view.menu();
+        }
     }
+
 
 
 }
