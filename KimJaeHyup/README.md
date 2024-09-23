@@ -18,13 +18,7 @@
 - Bean 활용
 - 리액트 복습 & 실습
 
-## :world_map: 범위 ##
-spring core
 
 ## :hammer_and_wrench: 사용 기술 ##
 ![My Skills](https://go-skill-icons.vercel.app/api/icons?i=spring,react,postgresql,ollama&perline=3)
-
-
-
-[![My Skills](https://skillicons.dev/icons?i=spring,react,postgresql,o)](https://skillicons.dev)
 
